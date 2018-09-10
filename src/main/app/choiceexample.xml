@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8081" doc:name="HTTP Listener Configuration" protocol="HTTPS">
+        <tls:context>
+            <tls:key-store type="jks" path="C:/Users/kota/Desktop/DATA/http_security/keystore.jks" alias="mule" keyPassword="asritha315" password="asritha315" algorithm="RSA"/>
+        </tls:context>
+    </http:listener-config>
+    <flow name="choiceexampleFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/cityChoice" doc:name="HTTP"/>
+        <set-variable variableName="cityVar" value="#[json:input/city]" doc:name="Variable"/>
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.cityVar=='Hyd']">
+                <logger message="Hyd flow started" level="INFO" doc:name="hydLog"/>
+                <set-payload value="'It is  a IT Hub'" doc:name="Set Hyd Payload"/>
+            </when>
+            <when expression="#[flowVars.cityVar=='Chennai']">
+                <logger message="Chennai started" level="INFO" doc:name="chennaiLog"/>
+                <set-payload value="'It's famous for temples'" doc:name="Set Chennai Payload"/>
+            </when>
+            <when expression="#[flowVars.cityVar=='Bglr']">
+                <logger message="bglr flow is started" level="INFO" doc:name="bglrLog"/>
+                <set-payload value="'It's a Green City'" doc:name="Set Bglr  Payload"/>
+            </when>
+            <otherwise>
+                <logger message="none are started" level="INFO" doc:name="Logdefault"/>
+                <set-payload value="'Please enter Hyd or Chenn or Bglr'" doc:name="Set Default Payload"/>
+            </otherwise>
+        </choice>
+    </flow>
+</mule>
