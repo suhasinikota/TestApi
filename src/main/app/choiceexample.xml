@@ -33,6 +33,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
             <otherwise>
                 <logger message="none are started" level="INFO" doc:name="Logdefault"/>
                 <set-payload value="'Please enter Hyd or Chenn or Bglr'" doc:name="Set Default Payload"/>
+                <logger message="Default log" level="INFO" doc:name="Logger"/>
             </otherwise>
         </choice>
     </flow>
