@@ -28,6 +28,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
             <when expression="#[flowVars.cityVar=='Bglr']">
                 <logger message="bglr flow is started" level="INFO" doc:name="bglrLog"/>
                 <set-payload value="'It's a Green City'" doc:name="Set Bglr  Payload"/>
+                <logger message="Bglr done" level="INFO" doc:name="Logger"/>
             </when>
             <otherwise>
                 <logger message="none are started" level="INFO" doc:name="Logdefault"/>
